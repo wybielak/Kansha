@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    margin: 0;
+}
+
+body::-webkit-scrollbar {
+    width: 0;
+}
+
+.google-icon {
+    width: 20px;
+    height: 20px;
+    background-image: url('https://firebasestorage.googleapis.com/v0/b/flashback-57797.appspot.com/o/google.webp?alt=media&token=3764b61d-18eb-470e-a56b-b8eabd4371ed');
+    background-size: contain;
+}
+
+.h-halfscreen {
+    height: 50vh
+}
+
+.active-button {
+    transition: .1s;
+}
+
+.active-button:hover {
+    scale: 1.1
+}
+
+.active-button:active {
+    scale: .9;
+}
+
+.background-photo {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('');
+}
