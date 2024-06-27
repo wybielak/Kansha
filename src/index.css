@@ -32,6 +32,10 @@ body::-webkit-scrollbar {
     height: 50vh
 }
 
+.w-230 {
+    width: 230px
+}
+
 .active-button {
     transition: .1s;
 }
@@ -56,3 +60,5 @@ body::-webkit-scrollbar {
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+
+
