@@ -50,3 +50,9 @@ body::-webkit-scrollbar {
     background-size: cover;
     background-image: url('');
 }
+
+.text-gradient {
+    background: linear-gradient(to right top, #007d5c, #399e9f, #87bbcf, #cddaeb, rgba(255, 255, 255, 0.87));
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}

@@ -1,19 +1,14 @@
 import BottomMenu from './BottomMenu'
-import { signOut } from 'firebase/auth'
 import { auth } from '../config/FirebaseConfig'
 import { useEffect, useState } from 'react'
+import { useStore } from '../mobx/Store'
+import { NavLink } from 'react-router-dom'
 
 export default function Profile() {
 
     const [profilePhoto, setProfilePhoto] = useState<string | undefined>(undefined)
 
-    const logOut = async () => {
-        try {
-            await signOut(auth)
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    const { appStorage } = useStore()
 
     useEffect(() => {
         if (auth!.currentUser!.photoURL !== null && auth!.currentUser!.photoURL !== undefined) setProfilePhoto(auth!.currentUser!.photoURL)
@@ -28,7 +23,7 @@ export default function Profile() {
                     <p className='mb-7'>{auth!.currentUser!.email}</p>
                 </div>
                 
-                <button className='m-4 mb-20 h-10 p-2 cursor-pointer bg-dark text-light rounded' onClick={logOut}>Wyloguj</button>
+                <NavLink to='/'><button className='m-4 mb-20 h-10 p-2 cursor-pointer bg-dark text-light rounded' onClick={appStorage.logOut}>Wyloguj</button></NavLink>
             </div>
 
             
