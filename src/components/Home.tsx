@@ -6,6 +6,7 @@ import { auth } from '../config/FirebaseConfig'
 import { format } from 'date-fns';
 import { pl } from 'date-fns/locale'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
+import { FaPlus } from 'react-icons/fa'
 
 export default observer(function Home() {
 
@@ -17,8 +18,10 @@ export default observer(function Home() {
 
   useEffect(() => {
     if (auth!.currentUser!.photoURL !== null && auth!.currentUser!.photoURL !== undefined) setProfilePhoto(auth!.currentUser!.photoURL)
+
     appStorage.getDays().then(() => {
       setLoad(false)
+      appStorage.checkNewDay()
     })
 
   }, [])
@@ -33,39 +36,49 @@ export default observer(function Home() {
           {load ?
             <p>Wczytywanie</p> :
             <>
-              <div className='flex flex-row items-center justify-around w-screen'>
-                <div className='text-5xl' onClick={() => appStorage.prevDay()}><IoIosArrowBack /></div>
+              {appStorage.currentDay ?
+                <>
+                  <div className='flex flex-row items-center justify-around w-screen'>
+                    <div className='text-5xl cursor-pointer' onClick={() => appStorage.prevDay()}><IoIosArrowBack /></div>
 
-                <div className='text-center'>
-                  <h2 className='text-md'>{format(new Date(appStorage.currentDay!.date.seconds * 1000), 'EEEE', { locale: pl })}</h2>
-                  <h2 className='text-6xl'>{format(new Date(appStorage.currentDay!.date.seconds * 1000), 'dd')}</h2>
-                  <h2 className='text-lg mt-1 mb-5'>{format(new Date(appStorage.currentDay!.date.seconds * 1000), 'MM.yyyy')}</h2>
-                </div>
+                    <div className='text-center'>
+                      <h2 className='text-md'>{format(new Date(appStorage.currentDay!.date.seconds * 1000), 'EEEE', { locale: pl })}</h2>
+                      <h2 className='text-6xl'>{format(new Date(appStorage.currentDay!.date.seconds * 1000), 'dd')}</h2>
+                      <h2 className='text-lg mt-1 mb-5'>{format(new Date(appStorage.currentDay!.date.seconds * 1000), 'MM.yyyy')}</h2>
+                    </div>
 
-                <div className='text-5xl' onClick={() => appStorage.nextDay()}><IoIosArrowForward /></div>
-              </div>
+                    <div className='text-5xl cursor-pointer' onClick={() => appStorage.nextDay()}><IoIosArrowForward /></div>
+                  </div>
 
-              {format(new Date(), 'dd.MM.yyy') == format(new Date(appStorage.currentDay!.date.seconds * 1000), 'dd.MM.yyy') ? <h2 className='text-xl'>Za co dziś jesteś wdzięczny?</h2> : <h2 className='text-xl'>Za co byłeś wdzięczny?</h2>}
+                  {format(new Date(), 'dd.MM.yyy') == format(new Date(appStorage.currentDay!.date.seconds * 1000), 'dd.MM.yyy') ? <h2 className='text-xl'>Za co dziś jesteś wdzięczny?</h2> : <h2 className='text-xl'>Za co byłeś wdzięczny?</h2>}
 
-              <div className='flex flex-col items-center justify-center text-lg mt-5'>
-                {appStorage.currentDay?.reasons.map((reason, ki) => (
-                  <p key={ki}>{reason}</p>
-                ))}
-              </div>
+                  <div className='flex flex-col items-center justify-center text-lg mt-5'>
+                    {appStorage.currentDay?.reasons.map((reason, ki) => (
+                      <p key={ki}>{reason}</p>
+                    ))}
+                  </div>
+
+                  {
+                    format(new Date(), 'dd.MM.yyy') == format(new Date(appStorage.currentDay!.date.seconds * 1000), 'dd.MM.yyy') ?
+                      <>
+                        <form className='flex flex-row flex-nowrap items-center justify-center mt-5'>
+                          <div className='mr-2'>
+                            <input className='rounded p-1 text-lg bg-dark' placeholder='wpisz ...' type="text" value={appStorage.newReason} onChange={(e) => { appStorage.setNewReason(e.target.value) }} />
+                          </div>
+                          <button className='text-2xl' type='button' onClick={() => appStorage.addNewReason()}><FaPlus /></button>
+                        </form>
+                      </> :
+                      <></>
+                  }
+                </> :
+                <p>Pusto tu ...</p>
+              }
             </>
           }
 
+
+
         </div>
-        {/* <div className='w-230 flex flex-row flex-nowrap'>
-          {appStorage.days.map((val, index) => (
-            <div key={index} className='bg-gray-700 flex flex-col items-center justify-center m-1 w-230 h-halfscreen'>
-                {val.date}
-                {val.reasons.map((reason, ki) => (
-                  <p key={ki}>{reason}</p>
-                ))}
-            </div>
-          ))}
-        </div> */}
 
       </div>
       <BottomMenu />
