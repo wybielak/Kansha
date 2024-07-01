@@ -22,8 +22,16 @@ export default function Profile() {
                     <h2 className='my-3 font-bold'>{auth!.currentUser!.displayName}</h2>
                     <p className='mb-7'>{auth!.currentUser!.email}</p>
                 </div>
+
+                <div className='text-center mb-7'>
+                    <h2>Masz już</h2>
+                    <div className='flex items-end justify-center gap-1 text-3xl font-bold'><span>{appStorage.myDaysStat}</span> <h2>dni,</h2></div>
+                    <div className='flex items-end justify-center gap-1 text-3xl font-bold'><span>{appStorage.myReasonsStat}</span> <h2>powodów</h2></div>
+                    <h2>wdzięczności</h2>
+                </div>
                 
                 <NavLink to='/'><button className='m-4 mb-20 h-10 p-2 cursor-pointer bg-dark text-light rounded' onClick={appStorage.logOut}>Wyloguj</button></NavLink>
+            
             </div>
 
             

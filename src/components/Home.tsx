@@ -61,7 +61,7 @@ export default observer(function Home() {
                   {
                     format(new Date(), 'dd.MM.yyy') == format(new Date(appStorage.currentDay!.date.seconds * 1000), 'dd.MM.yyy') ?
                       <>
-                        <form className='flex flex-row flex-nowrap items-center justify-center mt-5'>
+                        <form className='flex flex-row flex-nowrap items-center justify-center mt-5 mb-16'>
                           <div className='mr-2'>
                             <input className='rounded p-1 text-lg bg-dark' placeholder='wpisz ...' type="text" value={appStorage.newReason} onChange={(e) => { appStorage.setNewReason(e.target.value) }} />
                           </div>

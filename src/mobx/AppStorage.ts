@@ -1,7 +1,7 @@
 import { signInWithPopup, signOut } from "firebase/auth";
 import { makeAutoObservable } from "mobx"
 import { auth, db, googleProvider } from "../config/FirebaseConfig";
-import { Timestamp, addDoc, collection, doc, getDocs, updateDoc } from "firebase/firestore";
+import { Timestamp, addDoc, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
 import { format } from "date-fns";
 
 type Tday = {
@@ -45,22 +45,21 @@ export default class AppStorage {
 
     newReason = ''
 
+    myDaysStat = 0
+    myReasonsStat = 0
+
     setDays = (data: Tday[]) => {
         this.days = data
         this.currentDay = data[0]
     }
 
     getDays = async () => {
-        const data = await getDocs(this.daysRef)
+        let myDaysRef = query(this.daysRef, where('userId', '==', `${auth!.currentUser!.uid}`))
+
+        const data = await getDocs(myDaysRef)
         const filteredData = data.docs.map((doc) => ({ ...doc.data(), id: doc.id } as Tday))
 
-        const filteredData2 = filteredData.filter((day) => {
-            if (day.userId == auth?.currentUser?.uid) {
-                return day
-            }
-        })
-
-        filteredData2.sort((a, b) => {
+        filteredData.sort((a, b) => {
             const dateA = a.date;
             const dateB = b.date;
 
@@ -70,8 +69,11 @@ export default class AppStorage {
             return 0;
         })
 
-        this.setDays(filteredData2)
+        this.setDays(filteredData)
         console.log('Pobrano dni')
+
+        this.getMyDaysStat()
+        this.getMyReasonsStat()
     }
 
     checkNewDay = async () => {
@@ -83,7 +85,11 @@ export default class AppStorage {
             })
 
             this.getDays()
+
+            console.log("Uzupełniono nowy dzień")
         }
+
+        console.log("Dzień ten sam")
     }
 
     setNewReason = (reason: string) => {
@@ -107,7 +113,6 @@ export default class AppStorage {
             console.log('nie można dodać pustego')
         }
 
-
     }
 
     prevDay = () => {
@@ -122,5 +127,39 @@ export default class AppStorage {
             this.cdIndex -= 1
         }
         this.currentDay = this.days[this.cdIndex]
+    }
+
+    setMyDaysStat = (data: number) => {
+        this.myDaysStat = data
+        console.log(this.myDaysStat)
+    }
+
+    getMyDaysStat = async () => {
+        let days_c = 0
+        this.days.forEach(() => {
+            days_c += 1
+        })
+
+        this.setMyDaysStat(days_c)
+
+        console.log("Obliczono stat dni")
+    }
+
+    setMyReasonsStat = (data: number) => {
+        this.myReasonsStat = data
+        console.log(this.myReasonsStat)
+    }
+
+    getMyReasonsStat = async () => {
+        let reasons_c = 0
+        this.days.forEach((day) => {
+            day.reasons.forEach(() => {
+                reasons_c += 1
+            })
+        })
+
+        this.setMyReasonsStat(reasons_c)
+
+        console.log("Obliczono stat powodów")
     }
 }
