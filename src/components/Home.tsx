@@ -20,8 +20,11 @@ export default observer(function Home() {
     if (auth!.currentUser!.photoURL !== null && auth!.currentUser!.photoURL !== undefined) setProfilePhoto(auth!.currentUser!.photoURL)
 
     appStorage.getDays().then(() => {
-      setLoad(false)
-      appStorage.checkNewDay()
+      appStorage.checkNewDay().then(() => {
+        appStorage.getCurrentDayReasons().then(() => {
+          setLoad(false)
+        })
+      })
     })
 
   }, [])
@@ -53,8 +56,8 @@ export default observer(function Home() {
                   {format(new Date(), 'dd.MM.yyy') == format(new Date(appStorage.currentDay!.date.seconds * 1000), 'dd.MM.yyy') ? <h2 className='text-xl'>Za co dziś jesteś wdzięczny?</h2> : <h2 className='text-xl'>Za co byłeś wdzięczny?</h2>}
 
                   <div className='flex flex-col items-center justify-center text-lg mt-5'>
-                    {appStorage.currentDay?.reasons.map((reason, ki) => (
-                      <p key={ki}>{reason}</p>
+                    {appStorage.currentDayReasons!.map((reason, ki) => (
+                      <p key={ki}>{reason.text}</p>
                     ))}
                   </div>
 
@@ -63,7 +66,7 @@ export default observer(function Home() {
                       <>
                         <form className='flex flex-row flex-nowrap items-center justify-center mt-5 mb-16'>
                           <div className='mr-2'>
-                            <input className='rounded p-1 text-lg bg-dark' placeholder='wpisz ...' type="text" value={appStorage.newReason} onChange={(e) => { appStorage.setNewReason(e.target.value) }} />
+                            <input className='rounded p-1 text-lg bg-dark' placeholder='wpisz ...' type="text" value={appStorage.newReasonText} onChange={(e) => { appStorage.setNewReasonText(e.target.value) }} />
                           </div>
                           <button className='text-2xl' type='button' onClick={() => appStorage.addNewReason()}><FaPlus /></button>
                         </form>
