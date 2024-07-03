@@ -53,7 +53,7 @@ export default observer(function Home() {
                     <div className='text-5xl cursor-pointer' onClick={() => appStorage.nextDay()}><IoIosArrowForward /></div>
                   </div>
 
-                  {format(new Date(), 'dd.MM.yyy') == format(new Date(appStorage.currentDay!.date.seconds * 1000), 'dd.MM.yyy') ? <h2 className='text-xl'>Za co dziś jesteś wdzięczny?</h2> : <h2 className='text-xl'>Za co byłeś wdzięczny?</h2>}
+                  {format(new Date(), 'dd.MM.yyy') == format(new Date(appStorage.currentDay!.date.seconds * 1000), 'dd.MM.yyy') ? <h2 className='text-xl'>Za co dziś jesteś wdzięczny/a?</h2> : <h2 className='text-xl'>Za co byłeś wdzięczny?</h2>}
 
                   <div className='flex flex-col items-center justify-center text-lg mt-5'>
                     {appStorage.currentDayReasons!.map((reason, ki) => (
