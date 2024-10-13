@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page Not Found</title>
+
+  <style media="screen">
+    :root {
+      font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+
+      color: rgba(255, 255, 255, 0.87);
+      background-color: #242424;
+
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
+
+    body::-webkit-scrollbar {
+      width: 0;
+    }
+
+    .notfound {
+      height: 50vh;
+
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: end;
+    }
+
+    .notfound p {
+      margin: 5px;
+    }
+
+    .notfound .link {
+      margin-top: 20px;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      align-self: center;
+      text-decoration: none;
+      background: linear-gradient(45deg, #007d5c, #cddaeb 80%);
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="message">
+    <div class='notfound'>
+      <h1>404</h1>
+      <p>Tej strony nie ma</p>
+      <p>Zapomniałeś?</p>
+      <a class="link" href="/">Wróć</a>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -3,8 +3,9 @@ import { auth } from '../config/FirebaseConfig'
 import { useEffect, useState } from 'react'
 import { useStore } from '../mobx/Store'
 import { NavLink } from 'react-router-dom'
+import { observer } from 'mobx-react-lite'
 
-export default function Profile() {
+export default observer(function Profile() {
 
     const [profilePhoto, setProfilePhoto] = useState<string | undefined>(undefined)
 
@@ -51,4 +52,4 @@ export default function Profile() {
             <div className='m-auto relative bottom-1 z-10 text-xs opacity-50'>Created by DNw 2024</div>
         </>
     )
-}
+})
