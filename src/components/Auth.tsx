@@ -7,7 +7,7 @@ export default observer(function Auth() {
 
   return (
     <>
-      <div className='w-screen h-halfscreen flex flex-col flex-nowrap, items-center justify-center'>
+      <div className='w-screen h-halfscreen flex flex-col flex-nowrap items-center justify-center'>
         <div className='h-halfscreen flex flex-col flex-nowrap justify-center'>
           <h1 className='mb-0 mt-5 text-3xl font-bold text-gradient'>Kansha</h1>
           <p className='my-4'>
